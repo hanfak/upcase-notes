@@ -1,14 +1,19 @@
 DimensionalMismatchError = Class.new(StandardError)
 
+# struct, creates a class with getter and setters
+Quantity = Struct.new(:amount, :unit)
+
 class UnitConverter
-  def initialize(amount, initial_unit, target_unit)
-    @amount = amount
-    @initial_unit = initial_unit
+  def initialize(initial_quantity, target_unit)
+    @initial_quantity = initial_quantity
     @target_unit = target_unit
   end
 
   def convert
-    @amount * find_conversion_index(from: @initial_unit, to: @target_unit)
+    Quantity.new(
+      @initial_quantity.amount * find_conversion_index(from: @initial_quantity.unit, to: @target_unit),
+      @target_unit
+    )
   end
 
   private
