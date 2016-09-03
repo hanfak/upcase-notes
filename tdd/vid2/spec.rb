@@ -24,23 +24,36 @@ class Person
   def full_name
     [@first_name, @middle_name, @last_name].compact.join(' ')
   end
+
+  def full_name_with_middle_initial
+    middle_name = @middle_name[0] unless @middle_name.nil?
+    [@first_name, middle_name , @last_name].compact.join(' ')
+  end
 end
 
 RSpec.describe Person do
+  let(:name_one) {Person.new(first_name: 'Han', middle_name: 'Cloud', last_name: 'Fakira')}
+  let(:name_two) {Person.new(first_name: 'Squall',  last_name: 'Lionheart')}
+
   describe "#full_name" do
     it "concatenates first name, middle name, and last name with spaces" do
-      han = Person.new(first_name: 'Han', middle_name: 'Cloud', last_name: 'Fakira')
-
-      expect(han.full_name).to eq('Han Cloud Fakira')
+      expect(name_one.full_name).to eq('Han Cloud Fakira')
     end
-    it "does not add extra spaces if middle name is missing" do
-      han = Person.new(first_name: 'Squall',  last_name: 'Lionheart')
 
-      expect(han.full_name).to eq('Squall Lionheart')
+    it "does not add extra spaces if middle name is missing" do
+      expect(name_two.full_name).to eq('Squall Lionheart')
     end
   end
 
-  describe "#full_name_with_middle_initial"
+  describe "#full_name_with_middle_initial" do
+    it "concatenates first name, middle name initial and last name with spaces" do
+      expect(name_one.full_name_with_middle_initial).to eq('Han C Fakira')
+    end
+
+    it "does not add extra spaces if middle name is missing" do
+      expect(name_two.full_name_with_middle_initial).to eq('Squall Lionheart')
+    end
+  end
 
   describe "#initials"
 end
