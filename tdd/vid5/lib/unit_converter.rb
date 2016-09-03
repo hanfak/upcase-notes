@@ -1,3 +1,5 @@
+DimensionalMismatchError = Class.new(StandardError)
+
 class UnitConverter
   def initialize(amount, initial_unit, target_unit)
     @amount = amount
@@ -18,6 +20,6 @@ class UnitConverter
     }
 
     def find_conversion_index(from: , to: )
-      CONVERSION_INDEX[from][to]
+      CONVERSION_INDEX[from][to] || raise(DimensionalMismatchError)
     end
 end
