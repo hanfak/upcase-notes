@@ -21,7 +21,9 @@ class Person
   end
 
   # implement your behavior here
-  
+  def full_name
+    [@first_name, @middle_name, @last_name].compact.join(' ')
+  end
 end
 
 RSpec.describe Person do
@@ -31,7 +33,11 @@ RSpec.describe Person do
 
       expect(han.full_name).to eq('Han Cloud Fakira')
     end
-    it "does not add extra spaces if middle name is missing"
+    it "does not add extra spaces if middle name is missing" do
+      han = Person.new(first_name: 'Squall',  last_name: 'Lionheart')
+
+      expect(han.full_name).to eq('Squall Lionheart')
+    end
   end
 
   describe "#full_name_with_middle_initial"
