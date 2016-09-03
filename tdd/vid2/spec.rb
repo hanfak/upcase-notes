@@ -22,13 +22,25 @@ class Person
 
   # implement your behavior here
   def full_name
-    [@first_name, @middle_name, @last_name].compact.join(' ')
+    to_string([@first_name, @middle_name, @last_name])
   end
 
   def full_name_with_middle_initial
-    middle_name = @middle_name[0] unless @middle_name.nil?
-    [@first_name, middle_name , @last_name].compact.join(' ')
+    to_string([@first_name, middle_initial , @last_name])
   end
+
+  def initials
+    to_string([@first_name[0], middle_initial, @last_name[0]])
+  end
+
+  private
+    def middle_initial
+      @middle_name[0] unless @middle_name.nil?
+    end
+
+    def to_string array
+      array.compact.join(' ')
+    end
 end
 
 RSpec.describe Person do
@@ -55,5 +67,13 @@ RSpec.describe Person do
     end
   end
 
-  describe "#initials"
+  describe "#initials" do
+    it "concatenates first name initial, middle name initial and last name initial with spaces" do
+      expect(name_one.initials).to eq('H C F')
+    end
+
+    it "does not add extra spaces if middle name is missing" do
+      expect(name_two.initials).to eq('S L')
+    end
+  end
 end
